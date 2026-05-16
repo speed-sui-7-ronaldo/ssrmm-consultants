@@ -880,20 +880,30 @@ function Contact() {
               e.preventDefault();
               if (form.name && form.email) {
                 try {
-                  const res = await fetch("http://localhost:5000/api/contact", {
+                  // Simply go to web3forms.com, enter your email to get an access key, and paste it below:
+                  const ACCESS_KEY = "YOUR_ACCESS_KEY_HERE"; 
+                  
+                  const res = await fetch("https://api.web3forms.com/submit", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(form)
+                    headers: {
+                      "Content-Type": "application/json",
+                      Accept: "application/json",
+                    },
+                    body: JSON.stringify({
+                      access_key: ACCESS_KEY,
+                      subject: `New Consultation Request from ${form.name}`,
+                      from_name: "SSRMM Website",
+                      ...form
+                    }),
                   });
+                  
                   if (res.ok) {
                     setSubmitted(true);
                   } else {
-                    console.error("Failed to send");
-                    setSubmitted(true); // Still show success for UI demo purposes
+                    alert("Please add your Web3Forms Access Key in the code first!");
                   }
                 } catch (error) {
-                  console.error("Backend unreachable", error);
-                  setSubmitted(true);
+                  console.error(error);
                 }
               }
             }}>
