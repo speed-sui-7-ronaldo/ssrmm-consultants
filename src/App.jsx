@@ -880,8 +880,8 @@ function Contact() {
               e.preventDefault();
               if (form.name && form.email) {
                 try {
-                  // Simply go to web3forms.com, enter your email to get an access key, and paste it below:
-                  const ACCESS_KEY = "YOUR_ACCESS_KEY_HERE"; 
+                  // The key is now securely hidden in the .env file
+                  const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY; 
                   
                   const res = await fetch("https://api.web3forms.com/submit", {
                     method: "POST",
